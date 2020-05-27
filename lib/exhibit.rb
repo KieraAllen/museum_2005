@@ -1,4 +1,6 @@
 class Exhibit
+  attr_reader :name,
+              :cost
 
   def initialize(exhibit_info)
     @name = exhibit_info[:name]
