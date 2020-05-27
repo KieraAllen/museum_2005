@@ -24,4 +24,8 @@ class Museum
     end
     exhibit_recs
   end
+
+  def admit(patron)
+    patrons << patron
+  end
 end
