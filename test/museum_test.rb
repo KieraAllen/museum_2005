@@ -146,14 +146,7 @@ class MuseumTest < Minitest::Test
 
     assert_equal [patron_1, patron_3], @dmns.ticket_lottery_contestants(dead_sea_scrolls)
   end
-
 end
-
-# - `ticket_lottery_contestants` returns an array of patrons
-# that do not have enough money to see an exhibit, but
-# are interested in that exhibit. The lottery winner is
-# generated randomly based on the available contestants
-# when `draw_lottery_winner` is called.
 
 # - You will need to use a **stub** to test the
 # `announce_lottery_winner` method in conjunction
