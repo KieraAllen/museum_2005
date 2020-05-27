@@ -120,13 +120,34 @@ class MuseumTest < Minitest::Test
 
     assert_equal expected, @dmns.patrons_by_exhibit_interest
   end
-end
 
-# - For `patrons_by_exhibit_interest`,
-# this method takes no arguments and
-# returns a Hash where each key is an Exhibit.
-# The value associated with that Exhibit is an Array of
-# all the Patrons that have an interest in that exhibit.
+  def test_it_can_list_patrons_who_are_interested_but_cannot_pay
+    gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
+    dead_sea_scrolls = Exhibit.new({name: "Dead Sea Scrolls", cost: 10})
+    imax = Exhibit.new({name: "IMAX",cost: 15})
+
+    @dmns.add_exhibit(gems_and_minerals)
+    @dmns.add_exhibit(dead_sea_scrolls)
+    @dmns.add_exhibit(imax)
+
+    patron_1 = Patron.new("Bob", 0)
+    patron_1.add_interest("Gems and Minerals")
+    patron_1.add_interest("Dead Sea Scrolls")
+
+    patron_2 = Patron.new("Sally", 20)
+    patron_2.add_interest("Dead Sea Scrolls")
+
+    patron_3 = Patron.new("Johnny", 5)
+    patron_3.add_interest("Dead Sea Scrolls")
+
+    @dmns.admit(patron_1)
+    @dmns.admit(patron_2)
+    @dmns.admit(patron_3)
+
+    assert_equal [patron_1, patron_3], @dmns.ticket_lottery_contestants(dead_sea_scrolls)
+  end
+
+end
 
 # - `ticket_lottery_contestants` returns an array of patrons
 # that do not have enough money to see an exhibit, but
@@ -139,9 +160,6 @@ end
 # with the `draw_lottery_winner` method. JOY!
 
 
-# pry(main)> dmns.ticket_lottery_contestants(dead_sea_scrolls)
-# # => [#<Patron:0x00007fb2011455b8...>, #<Patron:0x6666fb20114megan...>]
-#
 # pry(main)> dmns.draw_lottery_winner(dead_sea_scrolls)
 # # => "Johnny" or "Bob" can be returned here. Fun!
 #
