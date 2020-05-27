@@ -113,9 +113,9 @@ class MuseumTest < Minitest::Test
     @dmns.admit(patron_3)
 
     expected = {
-                gems_and_minerals: [patron_1],
-                dead_sea_scrolls: [patron_1, patron_2, patron_3],
-                imax: []
+                gems_and_minerals => [patron_1],
+                dead_sea_scrolls => [patron_1, patron_2, patron_3],
+                imax => []
               }
 
     assert_equal expected, @dmns.patrons_by_exhibit_interest
